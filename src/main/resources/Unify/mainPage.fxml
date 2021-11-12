@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Unify.MainPageController">
+    <tabs>
+        <Tab text="Home">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TextArea fx:id="cardanoPrice" layoutX="63.0" layoutY="99.0" prefHeight="50.0" prefWidth="234.0" text="Current Cardano Price">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </TextArea>
+                        <Button fx:id="refreshButton" layoutX="245.0" layoutY="249.0" mnemonicParsing="false" onAction="#refreshButtonPushed" prefHeight="59.0" prefWidth="110.0" text="Refresh">
+                            <font>
+                                <Font size="23.0" />
+                            </font>
+                        </Button>
+                        <TextField fx:id="price" layoutX="352.0" layoutY="99.0" prefHeight="50.0" prefWidth="157.0">
+                            <font>
+                                <Font size="23.0" />
+                            </font>
+                        </TextField>
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Send">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TextArea fx:id="enterAWalletAddressTextField" layoutX="70.0" layoutY="49.0" prefHeight="30.0" prefWidth="468.0" promptText="Enter a Wallet Address" />
+                        <TextArea layoutX="70.0" layoutY="115.0" prefHeight="47.0" prefWidth="155.0" text="Amount:" />
+                        <TextField fx:id="a000ADATextField" layoutX="304.0" layoutY="126.0" prefHeight="25.0" prefWidth="162.0" promptText="0.00 ADA" />
+                        <TextArea layoutX="70.0" layoutY="254.0" prefHeight="47.0" prefWidth="155.0" text="Additional Note:" />
+                        <TextArea fx:id="spendingPassword" layoutX="70.0" layoutY="173.0" prefHeight="47.0" prefWidth="155.0" text="Enter Spending Password:&#10;" />
+                        <Button fx:id="sendButton" layoutX="216.0" layoutY="332.0" mnemonicParsing="false" onAction="#sendButtonPushed" text="Send" />
+                        <TextField fx:id="spendingPasswordField" layoutX="304.0" layoutY="197.0" prefHeight="25.0" prefWidth="162.0" />
+                        <TextArea fx:id="writeAnOptionalMessageTextField" layoutX="304.0" layoutY="243.0" prefHeight="70.0" prefWidth="178.0" promptText="Write an Optional Message" />
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Receive">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TextField fx:id="walletAddressTextField" layoutX="87.0" layoutY="90.0" prefHeight="25.0" prefWidth="426.0" promptText="Receiving Address" />
+                        <Button fx:id="generateAddressButton" layoutX="183.0" layoutY="219.0" mnemonicParsing="false" onAction="#generateAddressButtonPushed" prefHeight="89.0" prefWidth="233.0" text="Generate Address">
+                            <font>
+                                <Font size="23.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Add ADA">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TextArea layoutX="134.0" layoutY="51.0" prefHeight="24.0" prefWidth="333.0" text="Add the Amount of ADA You Want to Add to Your Account" />
+                        <TextField fx:id="enterAmountHereTextField" layoutX="226.0" layoutY="161.0" promptText="Enter Amount Here" />
+                        <Button fx:id="ADDButton" layoutX="230.0" layoutY="244.0" mnemonicParsing="false" onAction="#ADDButtonPushed" prefHeight="81.0" prefWidth="140.0" text="ADD">
+                            <font>
+                                <Font size="26.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+      <Tab text="Ledger">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+    </tabs>
+</TabPane>
