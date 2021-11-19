@@ -54,6 +54,7 @@ public class User {
         this.password = password;
         this.spendingPassword = spendingPassword;
         this.accountTotal = accountTotal;
+        this.mnemonicPhrase = generateMnemonicPhrase();
     }
 
     /**
@@ -75,6 +76,8 @@ public class User {
     public int getAccountID() { return accountID; }
 
     public void setAddress() { address = generateAddress(); }
+
+    public String getMnemonicPhrase(){ return mnemonicPhrase; }
 
     public String getAddress(){
         address = generateAddress();

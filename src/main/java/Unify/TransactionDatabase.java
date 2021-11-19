@@ -6,9 +6,7 @@ public class TransactionDatabase {
     /**
      * these are the current connection strings to our azure sql database, which will change because we will merge the table from one database to the other
      */
-    Connection sending = DriverManager.getConnection("jdbc:sqlserver://unify-ledger.database.windows.net:1433;database=User;user=phsavov@unify-ledger;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-    //Connection receiving = DriverManager.getConnection("jdbc:sqlserver://unify-ledger.database.windows.net:1433;database=User;user=phsavov@unify-ledger;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-    Connection transaction = DriverManager.getConnection("jdbc:sqlserver://unify-ledger.database.windows.net:1433;database=Ledger;user=phsavov@unify-ledger;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+    Connection database = DriverManager.getConnection("jdbc:sqlserver://unify-db.database.windows.net:1433;database=Unify_Wallet;user=phsavov@unify-db;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
 
     private double amount;
     private String address;
@@ -47,10 +45,10 @@ public class TransactionDatabase {
      */
     public boolean sendingCrypto(double amount, String address, User sendingUser) throws SQLException {
 
-        sending.createStatement(); // creating a query statement
+        database.createStatement(); // creating a query statement
         //Statement receive = receiving.createStatement();
-        String getSending = "update Users set accountTotal= ? where accountID = ?"; // this is the query that will be sent
-        PreparedStatement prep1 = sending.prepareStatement(getSending); // creating a prepared statement
+        String getSending = "update Users set accountBalance= ? where accountID = ?"; // this is the query that will be sent
+        PreparedStatement prep1 = database.prepareStatement(getSending); // creating a prepared statement
 
         // Check if sending amount is more than account balance
         if ((sendingUser.getAccountTotal() - amount) < 0) {
@@ -66,8 +64,8 @@ public class TransactionDatabase {
         sendingUser.setAccountTotal(sendingUser.getAccountTotal() - amount); // setting the account total locally
 
         // getting the account of the receiving user through a query
-        String getReceivingUser = "Select * from Users where receivingAddress = ?";
-        PreparedStatement prep2 = sending.prepareStatement(getReceivingUser);
+        String getReceivingUser = "Select * from Users where address = ?";
+        PreparedStatement prep2 = database.prepareStatement(getReceivingUser);
         prep2.setString(1, address);
         ResultSet tempUser = prep2.executeQuery();
         tempUser.next();
@@ -77,8 +75,8 @@ public class TransactionDatabase {
                 tempUser.getString(5), tempUser.getString(6), tempUser.getDouble(3));
 
         // creating a new prepared statement and query string and setting the variables
-        String getCrypto = "update Users set accountTotal= ? where accountID = ?";
-        prep2 = sending.prepareStatement(getCrypto);
+        String getCrypto = "update Users set accountBalance= ? where accountID = ?";
+        prep2 = database.prepareStatement(getCrypto);
         newTotal = temporary.getAccountTotal() + amount;
         prep2.setString(1, String.valueOf((newTotal)));
         prep2.setString(2, String.valueOf(temporary.getAccountID()));
@@ -103,29 +101,14 @@ public class TransactionDatabase {
          * this first section creates a statement and then writes the string query that then becomes a prepared statement
          * which then the variables are set by some .setString statements and then the query is executed
          */
-        transaction.createStatement();
-        String query = "insert into Transactions (accountID, transactionType, ammount, receievingAccountID) " +
+        database.createStatement();
+        String query = "insert into Ladger (fromAccountID, ammount, toAccountID) " +
                 "values (?, ?, ?, ?);";
-        PreparedStatement statement = transaction.prepareStatement(query);
+        PreparedStatement statement = database.prepareStatement(query);
         statement.setString(1, String.valueOf(sendingUser.getAccountID()));
-        statement.setString(2, "SENDING");
-        statement.setString(3, String.valueOf(amount));
-        statement.setString(4, String.valueOf(receivingUser.getAccountID()));
+        statement.setString(2, String.valueOf(amount));
+        statement.setString(3, String.valueOf(receivingUser.getAccountID()));
         statement.executeUpdate();
 
-        String query2 = "insert into Transactions (accountID, transactionType, ammount, receievingAccountID) " +
-                "values (?, ?, ?, ?);";
-
-        /**
-         * this second section creates a statement and then writes the string query that then becomes a prepared statement
-         * which then the variables are set by some .setString statements and then the query is executed
-         */
-
-        PreparedStatement newStatement = transaction.prepareStatement(query2);
-        newStatement.setString(1, String.valueOf(receivingUser.getAccountID()));
-        newStatement.setString(2, "RECEIVING");
-        newStatement.setString(3, String.valueOf(amount));
-        newStatement.setString(4, String.valueOf(sendingUser.getAccountID()));
-        newStatement.executeUpdate();
     }
 }

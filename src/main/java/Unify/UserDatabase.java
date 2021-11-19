@@ -4,21 +4,20 @@ import java.sql.*;
 public class UserDatabase {
 
     public Connection connection;
-    public Statement statement;
 
     /**
      * This is the default constructor of the class that also establishes a connection to the database
      * @throws SQLException
      */
     public UserDatabase() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlserver://unify-ledger.database.windows.net:1433;database=User;user=phsavov@unify-ledger;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+        connection = DriverManager.getConnection("jdbc:sqlserver://unify-db.database.windows.net:1433;database=Unify_Wallet;user=phsavov@unify-db;password=PhiLeTo2001BL;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
     }
 
-    //TODO add a method to change a users password (low priority)
+
 
     /**
      * This method returns the user based on the username and password
-     * if the information enterd is correct then the user will be returned otherwise there will be a SQL exception
+     * if the information entered is correct then the user will be returned otherwise there will be an SQL exception
      * @param username: String
      * @param password: String
      * @return new User
@@ -27,7 +26,7 @@ public class UserDatabase {
     public User getUserInfo(String username, String password) throws SQLException {
         // create the statement and then writing the string query to get the information
         // then getting the result of the query in the result list and returning the user object
-        statement = connection.createStatement();
+        connection.createStatement();
         String query = "Select * from Users where userName = ? and password = ?";
         PreparedStatement prepStatement = connection.prepareStatement(query);
         prepStatement.setString(1,username);
@@ -36,10 +35,10 @@ public class UserDatabase {
         result.next();
 
         int accountID = result.getInt(1);
-        String userName = result.getString(4);
-        String pass = result.getString(5);
-        String spendPass = result.getString(6);
-        Double total = result.getDouble(3);
+        String userName = result.getString(2);
+        String pass = result.getString(3);
+        String spendPass = result.getString(4);
+        Double total = result.getDouble(6);
 
         return new User(accountID, userName, pass, spendPass, total);
     }
@@ -58,7 +57,7 @@ public class UserDatabase {
         // create the statement and then writing the string query to get the information
         // then getting the result of the query in the result list
         // then  comparing the username and password to see if they are correct
-        statement = connection.createStatement();
+        connection.createStatement();
         String query = "Select * from Users where userName = ? and password = ?";
         PreparedStatement prepStatement = connection.prepareStatement(query);
         prepStatement.setString(1, username);
@@ -66,7 +65,7 @@ public class UserDatabase {
         ResultSet result = prepStatement.executeQuery();
         result.next();
 
-        if (result.getString(4).equals(username) && result.getString(5).equals(password)) {
+        if (result.getString(2).equals(username) && result.getString(3).equals(password)) {
             return true;
         }
         return false;
@@ -82,7 +81,7 @@ public class UserDatabase {
     public int nextAccountId() throws SQLException {
         int newID;
         // the query gets the largest account id number and then just adding one to it is the new accountID
-        statement = connection.createStatement();
+        connection.createStatement();
         String query = "SELECT MAX(accountID) FROM Users"; //Query to get the greatest User account IDs in the User DB
         PreparedStatement prep = connection.prepareStatement(query);
         ResultSet result = prep.executeQuery();
@@ -90,7 +89,7 @@ public class UserDatabase {
 
         //System.out.println(result.getInt(1));
         newID = result.getInt(1) + 1;
-        return newID; // returning the new accoount id
+        return newID; // returning the new account id
     }
 
     /**
@@ -99,15 +98,16 @@ public class UserDatabase {
      * @throws SQLException
      */
     public void updateUserDB(User user) throws SQLException {
-        statement = connection.createStatement();
-        String query = "INSERT INTO Users (accountID, accountTotal, userName, password, spendingPassword)"
-                + "VALUES (?, ?, ?, ?, ?);";
+        connection.createStatement();
+        String query = "INSERT INTO Users (accountID, username, password, spendingPassword, mnemonicPhrase, accountBalance)"
+                + "VALUES (?, ?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, String.valueOf(user.getAccountID()));
-        preparedStatement.setString(2, String.valueOf(user.getAccountTotal()));
-        preparedStatement.setString(3, user.getUsername());
-        preparedStatement.setString(4, user.getPassword());
-        preparedStatement.setString(5, user.getSpendingPassword());
+        preparedStatement.setString(2, user.getUsername());
+        preparedStatement.setString(3, user.getPassword());
+        preparedStatement.setString(4, user.getSpendingPassword());
+        preparedStatement.setString(5, user.getMnemonicPhrase());
+        preparedStatement.setString(6, String.valueOf(user.getAccountTotal()));
         preparedStatement.executeUpdate();
     }
 
@@ -117,7 +117,7 @@ public class UserDatabase {
      * @throws SQLException
      */
     public void changePassword(User user) throws SQLException {
-        statement = connection.createStatement();
+        connection.createStatement();
         String query = "UPDATE Users SET password = ? WHERE accountID = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, String.valueOf(user.getPassword()));
@@ -133,8 +133,8 @@ public class UserDatabase {
      * @throws SQLException
      */
     public boolean addFunds(User user, double amount) throws SQLException {
-        statement = connection.createStatement();
-        String query = "update Users set accountTotal = ? where accountID = ?";
+        connection.createStatement();
+        String query = "update Users set accountBalance = ? where accountID = ?";
         PreparedStatement prep = connection.prepareStatement(query);
         prep.setString(1, String.valueOf(user.getAccountTotal() + amount));
         prep.setString(2, String.valueOf(user.getAccountID()));
@@ -150,8 +150,8 @@ public class UserDatabase {
      * @return boolean
      */
     public boolean updateAddress(User user, String address) throws SQLException {
-        statement = connection.createStatement();
-        String query = "update Users set receivingAddress = ? where accountID = ?";
+        connection.createStatement();
+        String query = "update Users set address = ? where accountID = ?";
         PreparedStatement prep = connection.prepareStatement(query);
         prep.setString(1, address);
         prep.setString(2, String.valueOf(user.getAccountID()));
@@ -167,12 +167,12 @@ public class UserDatabase {
      */
 
     public double getTotal(int accountID) throws SQLException {
-        statement = connection.createStatement();
+        connection.createStatement();
         String query = "select * from Users where accountID = ?";
         PreparedStatement prep = connection.prepareStatement(query);
         prep.setString(1, String.valueOf(accountID));
         ResultSet set = prep.executeQuery();
         set.next();
-        return set.getDouble(3);
+        return set.getDouble(6);
     }
 }
