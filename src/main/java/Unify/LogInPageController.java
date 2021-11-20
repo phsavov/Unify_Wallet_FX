@@ -28,7 +28,8 @@ public class LogInPageController {
     Scene scene;
 
     @FXML
-    public void LogIn(ActionEvent event) throws IOException {
+    public void LogIn(ActionEvent event) throws IOException, SQLException {
+        int loginAttempt = 3;
         boolean loginSuccessful = false;
 
         String username = usernameField.getText();
