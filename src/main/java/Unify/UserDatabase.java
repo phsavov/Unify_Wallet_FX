@@ -14,7 +14,6 @@ public class UserDatabase {
     }
 
 
-
     /**
      * This method returns the user based on the username and password
      * if the information entered is correct then the user will be returned otherwise there will be an SQL exception
@@ -46,29 +45,48 @@ public class UserDatabase {
 
     /**
      * Authenticates the user with their username and password
-     * if the username and password are correct then the method will return true
-     * otherwise false
+     * if the username is incorrect return 0
+     * if both the username and password is incorrect return 1
+     * return 2 if both are correct
      * @param username: String
      * @param password: String
-     * @return boolean
+     * @return int
      * @throws SQLException
      */
-    public boolean checkCredentials(String username, String password) throws SQLException {
+    public int checkCredentials(String username, String password) throws SQLException {
         // create the statement and then writing the string query to get the information
         // then getting the result of the query in the result list
         // then  comparing the username and password to see if they are correct
         connection.createStatement();
-        String query = "Select * from Users where userName = ? and password = ?";
-        PreparedStatement prepStatement = connection.prepareStatement(query);
-        prepStatement.setString(1, username);
-        prepStatement.setString(2, password);
-        ResultSet result = prepStatement.executeQuery();
-        result.next();
 
-        if (result.getString(2).equals(username) && result.getString(3).equals(password)) {
-            return true;
+        // Check the username
+        String usernameQuery = "Select * from Users where username = ?";
+        PreparedStatement usernamePrepStatement = connection.prepareStatement(usernameQuery);
+        usernamePrepStatement.setString(1, username);
+        ResultSet usernameResult = usernamePrepStatement.executeQuery();
+        if (!usernameResult.next()) {
+            return 0;
         }
-        return false;
+
+        // Check the username and password
+        String passwordQuery = "Select * from Users where username = ? and password = ?";
+        PreparedStatement passwordPrepStatement = connection.prepareStatement(passwordQuery);
+        passwordPrepStatement.setString(1, username);
+        passwordPrepStatement.setString(2, password);
+        ResultSet passwordResult = passwordPrepStatement.executeQuery();
+        if (!passwordResult.next()) {
+            String failedAttempt = "update Users set loginAttempts = ? where username = ? ";
+            PreparedStatement update = connection.prepareStatement(failedAttempt);
+            update.setString(1, String.valueOf(Integer.valueOf(usernameResult.getString(8)) + 1));
+            update.setString(2, username);
+            update.executeUpdate();
+
+            toBeBlocked(username);
+
+            return 1;
+        }
+
+        return 2;
     }
 
     public boolean toBeBlocked(String username) throws SQLException {
@@ -109,6 +127,7 @@ public class UserDatabase {
         return false;
     }
 
+
     /**
      * Creates a new unique accountID for the User
      * we determine the new accountID by getting the largest account ID number and
@@ -139,6 +158,7 @@ public class UserDatabase {
 
         return resultSet.next();
     }
+
 
     /**
      * Inserts a new User into the User database when the user makes a new account
@@ -213,7 +233,6 @@ public class UserDatabase {
      * @return
      * @throws SQLException
      */
-
     public double getTotal(int accountID) throws SQLException {
         connection.createStatement();
         String query = "select * from Users where accountID = ?";
