@@ -33,10 +33,25 @@ public class MainPageController {
      * @param event
      */
     @FXML
-    public void refreshButtonPushed(){}
+    public void refreshButtonPushed(ActionEvent event){
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        user = (User) stage.getUserData();
+        cardanoCurrentPrice = user.currentADAMarketPrice();
+        cardanoPrice.setText(String.valueOf(cardanoCurrentPrice));
+        displayTotal.setText(String.valueOf(user.getAccountTotal()));
+    }
 
     @FXML
     public void sendButtonPushed(){
 
+    }
+
+    @FXML
+    public void generateAddressButtonPushed(/*ActionEvent event*/) {
+    }
+
+    @FXML
+    public void ADDButtonPushed(/*ActionEvent event*/) {
     }
 }
