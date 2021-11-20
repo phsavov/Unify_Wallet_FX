@@ -71,6 +71,44 @@ public class UserDatabase {
         return false;
     }
 
+    public boolean toBeBlocked(String username) throws SQLException {
+        connection.createStatement();
+        String query = "select * from Users where username = ?";
+        PreparedStatement prep = connection.prepareStatement(query);
+        prep.setString(1, username);
+        ResultSet set = prep.executeQuery();
+
+        set.next();
+
+        if (set.getInt(8) >= 3){
+            String lock = "update Users set accountLocked = ? where username = ?";
+            prep = connection.prepareStatement(lock);
+            prep.setString(1, String.valueOf(1));
+            prep.setString(2, username);
+            prep.executeUpdate();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isBlocked(String username, String password) throws SQLException {
+        connection.createStatement();
+        String query = "Select * from Users where username = ? and password = ?";
+        PreparedStatement blocked = connection.prepareStatement(query);
+        blocked.setString(1, username);
+        blocked.setString(2, password);
+        ResultSet set = blocked.executeQuery();
+
+        set.next();
+
+        if (set.getInt(9) == 1){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Creates a new unique accountID for the User
      * we determine the new accountID by getting the largest account ID number and
@@ -90,6 +128,16 @@ public class UserDatabase {
         //System.out.println(result.getInt(1));
         newID = result.getInt(1) + 1;
         return newID; // returning the new account id
+    }
+
+    public boolean usernameExists(String username) throws SQLException {
+        connection.createStatement();
+        String query = "select * from Users where username = ?";
+        PreparedStatement prep = connection.prepareStatement(query);
+        prep.setString(1, username);
+        ResultSet resultSet = prep.executeQuery();
+
+        return resultSet.next();
     }
 
     /**

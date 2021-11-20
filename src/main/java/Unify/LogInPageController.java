@@ -39,16 +39,39 @@ public class LogInPageController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            loginSuccessful = db.checkCredentials(username, password);
-        } catch (SQLException e) {
+
+        loginAttempt = db.checkCredentials(username, password);
+        if(loginAttempt == 2){
+
+            if (db.isBlocked(username, password)){
+                Alert blocked = new Alert(Alert.AlertType.ERROR);
+                blocked.setHeaderText("Account Has Been Blocked");
+                blocked.setContentText("ATTENTION USER\nYour Account has been blocked due to too many incorrect login attempts.\n Please hit the 'OK' button to enter your Mnemonic Phrase to unlock your Account.");
+                blocked.showAndWait();
+                // TODO make a page to enter the Mnemonic Phrase and then another page to change the password
+
+
+            }
+            loginSuccessful = true;
+        } else if (loginAttempt == 0){
             Alert error = new Alert(Alert.AlertType.ERROR);
-            error.setHeaderText("Incorrect Inputs");
-            error.setContentText("The Username or Password entered was Incorrect\nPlease re-enter the credentials");
+            error.setHeaderText("Invalid Username");
+            error.setContentText("The Username cannot be located in the database\nPlease re-enter the credentials");
             error.showAndWait();
             usernameField.clear();
             passwordField.clear();
+            loginSuccessful = false;
+        } else if (loginAttempt == 1){
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("Invalid Password");
+            error.setContentText("The Password is entered incorrectly\nPlease re-enter the credentials");
+            error.showAndWait();
+            usernameField.clear();
+            passwordField.clear();
+
+            loginSuccessful = false;
         }
+
 
         if (loginSuccessful) {
             Parent root = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
@@ -65,3 +88,4 @@ public class LogInPageController {
 
     }
 }
+
