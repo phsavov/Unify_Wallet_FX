@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+// version 2.3
 public class WalletApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
