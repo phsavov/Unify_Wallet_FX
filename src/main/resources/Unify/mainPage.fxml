@@ -41,14 +41,28 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <TextArea fx:id="enterAWalletAddressTextField" layoutX="70.0" layoutY="49.0" prefHeight="30.0" prefWidth="468.0" promptText="Enter a Wallet Address" />
-                        <TextArea layoutX="70.0" layoutY="115.0" prefHeight="47.0" prefWidth="155.0" text="Amount:" />
-                        <TextField fx:id="a000ADATextField" layoutX="304.0" layoutY="126.0" prefHeight="25.0" prefWidth="162.0" promptText="0.00 ADA" />
-                        <TextArea layoutX="70.0" layoutY="254.0" prefHeight="47.0" prefWidth="155.0" text="Additional Note:" />
-                        <TextArea fx:id="spendingPassword" layoutX="70.0" layoutY="173.0" prefHeight="47.0" prefWidth="155.0" text="Enter Spending Password:&#10;" />
-                        <Button fx:id="sendButton" layoutX="216.0" layoutY="332.0" mnemonicParsing="false" onAction="#sendButtonPushed" text="Send" />
-                        <TextField fx:id="spendingPasswordField" layoutX="304.0" layoutY="197.0" prefHeight="25.0" prefWidth="162.0" />
-                        <TextArea fx:id="writeAnOptionalMessageTextField" layoutX="304.0" layoutY="243.0" prefHeight="70.0" prefWidth="178.0" promptText="Write an Optional Message" />
+                        <TextField fx:id="ADATextField" layoutX="299.0" layoutY="126.0" prefHeight="25.0" prefWidth="162.0" promptText="0.00 ADA" />
+                        <Button fx:id="sendButton" layoutX="257.0" layoutY="288.0" mnemonicParsing="false" onAction="#sendButtonPushed" text="Send">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Button>
+                  <TextField fx:id="receivingAddress" layoutX="299.0" layoutY="65.0" prefHeight="25.0" prefWidth="161.0" promptText="Address" />
+                  <Label layoutX="136.0" layoutY="125.0" text="Amount of ADA">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="112.0" layoutY="196.0" text="Spending Password">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="131.0" layoutY="64.0" text="Receiving Address">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="spendingPasswordField" layoutX="300.0" layoutY="197.0" prefHeight="25.0" prefWidth="163.0" />
                     </children></AnchorPane>
             </content>
         </Tab>
@@ -56,12 +70,21 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <TextField fx:id="walletAddressTextField" layoutX="87.0" layoutY="90.0" prefHeight="25.0" prefWidth="426.0" promptText="Receiving Address" />
                         <Button fx:id="generateAddressButton" layoutX="183.0" layoutY="219.0" mnemonicParsing="false" onAction="#generateAddressButtonPushed" prefHeight="89.0" prefWidth="233.0" text="Generate Address">
                             <font>
                                 <Font size="23.0" />
                             </font>
                         </Button>
+                  <Label layoutX="79.0" layoutY="93.0" text="Press the Generate Address Button to Get Your Wallet Address">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="addressLabel" layoutX="235.0" layoutY="143.0" onInputMethodTextChanged="#generateAddressButtonPushed" prefHeight="20.0" prefWidth="129.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                     </children>
                 </AnchorPane>
             </content>

@@ -65,7 +65,7 @@ public class UserDatabase {
         usernamePrepStatement.setString(1, username);
         ResultSet usernameResult = usernamePrepStatement.executeQuery();
         if (!usernameResult.next()) {
-            return 0;
+            return 0; // username is incorrect
         }
 
         // Check the username and password
@@ -82,11 +82,10 @@ public class UserDatabase {
             update.executeUpdate();
 
             toBeBlocked(username);
-
-            return 1;
+            return 1; // password is incorrect
         }
 
-        return 2;
+        return 2; // username and password are correct
     }
 
     public boolean toBeBlocked(String username) throws SQLException {
@@ -125,6 +124,15 @@ public class UserDatabase {
             return true;
         }
         return false;
+    }
+
+    public void unBlock(User user) throws SQLException {
+        connection.createStatement();
+        String unlock = "update Users set accountLocked = ? where accountID = ?";
+        PreparedStatement statement = connection.prepareStatement(unlock);
+        statement.setString(1, String.valueOf(0));
+        statement.setString(2, String.valueOf(user.getAccountID()));
+        statement.executeUpdate();
     }
 
 

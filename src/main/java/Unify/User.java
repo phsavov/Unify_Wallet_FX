@@ -80,13 +80,17 @@ public class User {
     public String getMnemonicPhrase(){ return mnemonicPhrase; }
 
     public String getAddress(){
-        address = generateAddress();
         return address;
     }
 
     public void setMnemonicPhrase() { mnemonicPhrase = generateMnemonicPhrase(); }
 
     public String getPassword() { return password; }
+
+    public boolean changePassword(String password){
+        this.password = password;
+        return true;
+    }
 
     public String getSpendingPassword() { return spendingPassword; }
 
@@ -103,6 +107,7 @@ public class User {
         int character = 65;
         for (int i = 0; i < 26; i++){
             alphabet[i] = (char) character;
+            character++;
         }
         Random random = new Random();
         for (int i = 0; i < 5; i++){

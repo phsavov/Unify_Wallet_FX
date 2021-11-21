@@ -34,10 +34,13 @@ public class Transaction {
      */
     public boolean processSendingTransaction(User from, String toAddress, double amount) throws SQLException {
         if (transaction.sendingCrypto(amount, toAddress, from)){
-            transactionCount++;
             return true;
         }
         return false;
+    }
+
+    public ArrayList<String> getHistory(User user) throws SQLException {
+        return transaction.history(user);
     }
 
 }

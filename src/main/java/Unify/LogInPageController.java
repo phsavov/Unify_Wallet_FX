@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class LogInPageController {
 
@@ -51,6 +52,16 @@ public class LogInPageController {
                 blocked.showAndWait();
                 // TODO make a page to enter the Mnemonic Phrase and then another page to change the password
 
+                Parent root = FXMLLoader.load(getClass().getResource("mnemonicPage.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                try {
+                    stage.setUserData(db.getUserInfo(username, password));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
             }
             loginSuccessful = true;

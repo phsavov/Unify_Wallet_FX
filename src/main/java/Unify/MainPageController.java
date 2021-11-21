@@ -1,21 +1,15 @@
 package Unify;
 
-import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 
 public class MainPageController {
@@ -43,15 +37,89 @@ public class MainPageController {
     }
 
     @FXML
-    public void sendButtonPushed(){
+    public void sendButtonPushed(ActionEvent event) throws SQLException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        user = (User) stage.getUserData();
 
+        Transaction transaction = new Transaction();
+
+        String toAddress = receivingAddress.getText();
+        double amount = Double.parseDouble(ADATextField.getText());
+        String spendingPass = spendingPasswordField.getText();
+
+        if (spendingPass.equals(user.getSpendingPassword())){
+            if (transaction.processSendingTransaction(user, toAddress, amount)){
+                Alert processed = new Alert(Alert.AlertType.CONFIRMATION);
+                processed.setHeaderText("Transaction Complete");
+                processed.setContentText("The Transaction has been processed!!");
+                processed.showAndWait();
+            } else {
+                Alert notProcessed = new Alert(Alert.AlertType.ERROR);
+                notProcessed.setHeaderText("Transaction Not Able to Process");
+                notProcessed.setContentText("""
+                        The Transaction has not been able to be processed.
+                        There is a Database Connection issue. Please check your internet connection.
+                        If not the case, please email philip.savov@utdallas.edu""");
+                notProcessed.showAndWait();
+            }
+
+        } else {
+            Alert wrongPass = new Alert(Alert.AlertType.ERROR);
+            wrongPass.setHeaderText("Incorrect Password");
+            wrongPass.setContentText("The spending password you entered is incorrect");
+            wrongPass.showAndWait();
+            spendingPasswordField.clear();
+        }
     }
 
     @FXML
-    public void generateAddressButtonPushed(/*ActionEvent event*/) {
+    public void generateAddressButtonPushed(ActionEvent event) {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        user = (User) stage.getUserData();
+
+        user.setAddress();
+
+        addressLabel.setText(user.getAddress());
     }
 
     @FXML
-    public void ADDButtonPushed(/*ActionEvent event*/) {
+    public void ADDButtonPushed(ActionEvent event) throws SQLException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        user = (User) stage.getUserData();
+
+        double amount = Double.valueOf(enterAmountHereTextField.getText());
+        UserDatabase database = new UserDatabase();
+
+        if (amount <= 0){
+            Alert toLow = new Alert(Alert.AlertType.ERROR);
+            toLow.setHeaderText("Incorrect Input");
+            toLow.setHeaderText("""
+                    The amount entered was negative or 0.
+                    Please enter a number that is greater than 0.
+                    """);
+            toLow.showAndWait();
+        } else {
+            if (database.addFunds(user, amount)){
+                displayTotal.setText(String.valueOf(user.getAccountTotal()));
+                Alert worked = new Alert(Alert.AlertType.CONFIRMATION);
+                worked.setHeaderText("Success!!!");
+                worked.setContentText("""
+                        The Funds have been successfully added to your account.
+                        To see just click on the 'Home' Tab.
+                        """);
+            } else {
+                Alert notProcessed = new Alert(Alert.AlertType.ERROR);
+                notProcessed.setHeaderText("The funds were not able to be processed");
+                notProcessed.setContentText("""
+                        The add funds has not been able to be processed.
+                        There is a Database Connection issue. Please check your internet connection.
+                        If not the case, please email philip.savov@utdallas.edu
+                        """);
+                notProcessed.showAndWait();
+            }
+        }
     }
 }

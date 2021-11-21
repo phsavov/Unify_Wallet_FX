@@ -1,6 +1,7 @@
 package Unify;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class TransactionDatabase {
     /**
@@ -102,13 +103,28 @@ public class TransactionDatabase {
          * which then the variables are set by some .setString statements and then the query is executed
          */
         database.createStatement();
-        String query = "insert into Ladger (fromAccountID, ammount, toAccountID) " +
-                "values (?, ?, ?, ?);";
+        String query = "insert into Ledger (fromAccountID, amount, toAccountID) " +
+                "values (?, ?, ?);";
         PreparedStatement statement = database.prepareStatement(query);
         statement.setString(1, String.valueOf(sendingUser.getAccountID()));
         statement.setString(2, String.valueOf(amount));
         statement.setString(3, String.valueOf(receivingUser.getAccountID()));
         statement.executeUpdate();
 
+    }
+
+    public ArrayList<String> history(User user) throws SQLException {
+        ArrayList<String> transactionHistory = new ArrayList<>();
+        database.createStatement();
+        String query = "select * from Ledger where fromAccountID = ? or toAccountID = ?";
+        PreparedStatement prep = database.prepareStatement(query);
+        prep.setString(1, String.valueOf(user.getAccountID()));
+        prep.setString(2, String.valueOf(user.getAccountID()));
+        ResultSet result = prep.executeQuery();
+        while (result.next()){
+            transactionHistory.add(result.getString(1)+" "+result.getString(2)+" "+result.getString(3));
+        }
+
+        return transactionHistory;
     }
 }
