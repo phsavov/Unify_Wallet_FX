@@ -88,6 +88,22 @@ public class UserDatabase {
         return 2; // username and password are correct
     }
 
+
+    /**
+     * Resets the login attempts to 0
+     * @param user: User
+     * @throws SQLException
+     */
+    public void resetLoginAttempts(User user) throws SQLException {
+
+        connection.createStatement();
+        String resetQuery = "update Users set loginAttempts = ? where username = ? ";
+        PreparedStatement update = connection.prepareStatement(resetQuery);
+        update.setString(1, "0");
+        update.setString(2, user.getUsername());
+        update.executeUpdate();
+    }
+
     public boolean toBeBlocked(String username) throws SQLException {
         connection.createStatement();
         String query = "select * from Users where username = ?";

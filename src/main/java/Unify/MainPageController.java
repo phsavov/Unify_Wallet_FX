@@ -36,6 +36,12 @@ public class MainPageController {
         displayTotal.setText(String.valueOf(user.getAccountTotal()));
     }
 
+
+    /**
+     *
+     * @param event
+     * @throws SQLException
+     */
     @FXML
     public void sendButtonPushed(ActionEvent event) throws SQLException {
         Node node = (Node) event.getSource();
