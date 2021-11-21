@@ -15,25 +15,25 @@
                                 <Font size="23.0" />
                             </font>
                         </Button>
-                  <Label layoutX="87.0" layoutY="109.0" text="Current Cardano Price">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="87.0" layoutY="185.0" text="Account Total">
-                     <font>
-                        <Font size="20.0" />
-                     </font></Label>
-                  <Label fx:id="displayTotal" layoutX="322.0" layoutY="185.0" onInputMethodTextChanged="#refreshButtonPushed" text="Press Refresh Button">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="cardanoPrice" layoutX="323.0" layoutY="109.0" onInputMethodTextChanged="#refreshButtonPushed" text="Press Refresh Button">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
+                        <Label layoutX="87.0" layoutY="109.0" text="Current Cardano Price">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="87.0" layoutY="185.0" text="Account Total">
+                            <font>
+                                <Font size="20.0" />
+                            </font></Label>
+                        <Label fx:id="displayTotal" layoutX="322.0" layoutY="185.0" onInputMethodTextChanged="#refreshButtonPushed" text="Press Refresh Button">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="cardanoPrice" layoutX="323.0" layoutY="109.0" onInputMethodTextChanged="#refreshButtonPushed" text="Press Refresh Button">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
                     </children></AnchorPane>
             </content>
         </Tab>
@@ -99,22 +99,29 @@
                                 <Font size="26.0" />
                             </font>
                         </Button>
-                  <Label layoutX="91.0" layoutY="77.0" text="Add the Amount of ADA You Want to Add to Your Account">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                        <Label layoutX="91.0" layoutY="77.0" text="Add the Amount of ADA You Want to Add to Your Account">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
-      <Tab text="Ledger">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <ListView fx:id="ledgerTable" layoutX="200.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" />
-               </children></AnchorPane>
-        </content>
-      </Tab>
+        <Tab text="Ledger">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="transactionRefreshButton" layoutX="241.0" layoutY="268.0" mnemonicParsing="false" onAction="#transactionRefreshButtonPushed" prefHeight="66.0" prefWidth="118.0" text="Refresh" />
+                  <TableView fx:id="transactionHistory" layoutX="146.0" layoutY="49.0" prefHeight="200.0" prefWidth="321.0">
+                    <columns>
+                      <TableColumn fx:id="fromAccountID" editable="false" onEditStart="#refreshButtonPushed" prefWidth="102.33332824707031" sortable="false" text="From Account ID" />
+                      <TableColumn fx:id="amount" editable="false" onEditStart="#refreshButtonPushed" prefWidth="120.3333740234375" text="Amount" />
+                        <TableColumn fx:id="toAccountID" editable="false" onEditStart="#refreshButtonPushed" prefWidth="98.3333740234375" sortable="false" text="To Account ID" />
+                    </columns>
+                  </TableView>
+                    </children></AnchorPane>
+            </content>
+        </Tab>
     </tabs>
 </TabPane>

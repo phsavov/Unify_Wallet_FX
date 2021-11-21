@@ -11,13 +11,34 @@ import javafx.stage.Stage;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class MainPageController {
+public class MainPageController  {
 
     @FXML
     Label cardanoPrice;
     @FXML
     Label displayTotal;
+    @FXML
+    TextField receivingAddress;
+    @FXML
+    TextField ADATextField;
+    @FXML
+    PasswordField spendingPasswordField;
+    @FXML
+    Label addressLabel;
+    @FXML
+    TextField enterAmountHereTextField;
+    @FXML
+    TableView<String> transactionHistory;
+    @FXML
+    TableColumn<String, String> toAccountID;
+    @FXML
+    TableColumn<String, String> fromAccountID;
+    @FXML
+    TableColumn<String, String> amount;
+
 
     protected User user;
     double cardanoCurrentPrice;
@@ -126,6 +147,31 @@ public class MainPageController {
                         """);
                 notProcessed.showAndWait();
             }
+        }
+    }
+
+    public ObservableList<String> getTransactions() throws SQLException {
+        ObservableList<String> transactionList = FXCollections.observableArrayList();
+        Transaction transaction = new Transaction();
+        ArrayList<String> list = transaction.getHistory(user);
+        transactionList.addAll(list);
+        return transactionList;
+    }
+
+    public void transactionRefreshButtonPushed(ActionEvent event) throws SQLException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        user = (User) stage.getUserData();
+        String transaction = "";
+        Scanner values = new Scanner(transaction);
+        // TODO fix this code so we can add the transaction history to the transaction history tableview
+        ObservableList<String> transactionList = getTransactions();
+        //toAccountID.setCellValueFactory(new PropertyValueFactory<>(""));
+        for (int index = 0; index < transactionList.size(); index++) {
+            transaction = transactionList.get(index);
+            fromAccountID.setText(values.next());
+            amount.setText(values.next()+" ADA");
+            toAccountID.setText(values.next());
         }
     }
 }
