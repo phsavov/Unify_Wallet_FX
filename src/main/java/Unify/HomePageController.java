@@ -35,8 +35,12 @@ public class HomePageController {
     }
 
     @FXML
-    public void createAccountButton(){
-
+    public void createAccountButton(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("createAccountPage.fxml"));
+        stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }
