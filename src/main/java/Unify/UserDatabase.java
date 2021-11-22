@@ -78,7 +78,7 @@ public class UserDatabase {
         if (!passwordResult.next()) {
             String failedAttempt = "update Users set loginAttempts = ? where username = ? ";
             PreparedStatement update = connection.prepareStatement(failedAttempt);
-            update.setString(1, String.valueOf(Integer.valueOf(usernameResult.getString(8)) + 1));
+            update.setString(1, String.valueOf(Integer.valueOf(usernameResult.getInt(8)) + 1));
             update.setString(2, username);
             update.executeUpdate();
 
