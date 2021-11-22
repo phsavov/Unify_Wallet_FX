@@ -76,8 +76,8 @@ public class TransactionDatabase {
         tempUser.next();
 
         // creating a temporary user that holds the receiving user information to run another query to be able to finalize the transaction
-        User temporary  = new User(tempUser.getInt(1), tempUser.getString(4),
-                tempUser.getString(5), tempUser.getString(6), tempUser.getDouble(3));
+        User temporary  = new User(tempUser.getInt(1), tempUser.getString(2),
+                tempUser.getString(3), tempUser.getString(4), tempUser.getString(5), tempUser.getDouble(6));
 
         // creating a new prepared statement and query string and setting the variables
         String getCrypto = "update Users set accountBalance= ? where accountID = ?";

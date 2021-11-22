@@ -49,12 +49,13 @@ public class MainPageController  {
      * @param event
      */
     @FXML
-    public void refreshButtonPushed(ActionEvent event){
+    public void refreshButtonPushed(ActionEvent event) throws SQLException {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         user = (User) stage.getUserData();
         cardanoCurrentPrice = user.currentADAMarketPrice();
         cardanoPrice.setText(String.valueOf(cardanoCurrentPrice));
+        user.updateTotal();
         displayTotal.setText(String.valueOf(user.getAccountTotal()));
     }
 
