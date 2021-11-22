@@ -1,9 +1,11 @@
 package Unify;
+import javafx.collections.ObservableList;
+
 import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Transaction {
+public class UserTransactions {
 
 
     public String    transactionID; //transaction hash
@@ -20,7 +22,7 @@ public class Transaction {
     
 
     // Constructor that creates a new instance of the transaction database
-    public Transaction() throws SQLException {
+    public UserTransactions() throws SQLException {
         transaction = new TransactionDatabase();
     }
 
@@ -39,7 +41,7 @@ public class Transaction {
         return false;
     }
 
-    public ArrayList<String> getHistory(User user) throws SQLException {
+    public ObservableList<Transactions> getHistory(User user) throws SQLException {
         return transaction.history(user);
     }
 

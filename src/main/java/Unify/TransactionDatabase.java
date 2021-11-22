@@ -1,7 +1,11 @@
 package Unify;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TransactionDatabase {
     /**
@@ -113,8 +117,8 @@ public class TransactionDatabase {
 
     }
 
-    public ArrayList<String> history(User user) throws SQLException {
-        ArrayList<String> transactionHistory = new ArrayList<>();
+    public ObservableList<Transactions> history(User user) throws SQLException {
+        ObservableList<Transactions> transactionHistory = FXCollections.observableArrayList();
         database.createStatement();
         String query = "select * from Ledger where fromAccountID = ? or toAccountID = ?";
         PreparedStatement prep = database.prepareStatement(query);
@@ -122,7 +126,7 @@ public class TransactionDatabase {
         prep.setString(2, String.valueOf(user.getAccountID()));
         ResultSet result = prep.executeQuery();
         while (result.next()){
-            transactionHistory.add(result.getString(1)+" "+result.getString(2)+" "+result.getString(3));
+            transactionHistory.add(new Transactions(result.getString(1),result.getString(2), result.getString(3)));
         }
 
         return transactionHistory;

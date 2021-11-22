@@ -115,7 +115,7 @@
                         <Button fx:id="transactionRefreshButton" layoutX="241.0" layoutY="268.0" mnemonicParsing="false" onAction="#transactionRefreshButtonPushed" prefHeight="66.0" prefWidth="118.0" text="Refresh" />
                   <TableView fx:id="transactionHistory" layoutX="146.0" layoutY="49.0" prefHeight="200.0" prefWidth="321.0">
                     <columns>
-                      <TableColumn fx:id="fromAccountID" editable="false" onEditStart="#refreshButtonPushed" prefWidth="102.33332824707031" sortable="false" text="From Account ID" />
+                      <TableColumn fx:id="fromAccountID" editable="false" onEditStart="#transactionRefreshButtonPushed" prefWidth="102.33332824707031" sortable="false" text="From Account ID" />
                       <TableColumn fx:id="amount" editable="false" onEditStart="#refreshButtonPushed" prefWidth="120.3333740234375" text="Amount" />
                         <TableColumn fx:id="toAccountID" editable="false" onEditStart="#refreshButtonPushed" prefWidth="98.3333740234375" sortable="false" text="To Account ID" />
                     </columns>

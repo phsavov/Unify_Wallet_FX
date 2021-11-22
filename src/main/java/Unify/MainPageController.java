@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainPageController  {
@@ -31,7 +32,7 @@ public class MainPageController  {
     @FXML
     TextField enterAmountHereTextField;
     @FXML
-    TableView<String> transactionHistory;
+    TableView<Transactions> transactionHistory;
     @FXML
     TableColumn<String, String> toAccountID;
     @FXML
@@ -69,23 +70,23 @@ public class MainPageController  {
         Stage stage = (Stage) node.getScene().getWindow();
         user = (User) stage.getUserData();
 
-        Transaction transaction = new Transaction();
+        UserTransactions userTransactions = new UserTransactions();
 
         String toAddress = receivingAddress.getText();
         double amount = Double.parseDouble(ADATextField.getText());
         String spendingPass = spendingPasswordField.getText();
 
         if (spendingPass.equals(user.getSpendingPassword())){
-            if (transaction.processSendingTransaction(user, toAddress, amount)){
+            if (userTransactions.processSendingTransaction(user, toAddress, amount)){
                 Alert processed = new Alert(Alert.AlertType.CONFIRMATION);
-                processed.setHeaderText("Transaction Complete");
-                processed.setContentText("The Transaction has been processed!!");
+                processed.setHeaderText("UserTransactions Complete");
+                processed.setContentText("The UserTransactions has been processed!!");
                 processed.showAndWait();
             } else {
                 Alert notProcessed = new Alert(Alert.AlertType.ERROR);
-                notProcessed.setHeaderText("Transaction Not Able to Process");
+                notProcessed.setHeaderText("UserTransactions Not Able to Process");
                 notProcessed.setContentText("""
-                        The Transaction has not been able to be processed.
+                        The UserTransactions has not been able to be processed.
                         There is a Database Connection issue. Please check your internet connection.
                         If not the case, please email philip.savov@utdallas.edu""");
                 notProcessed.showAndWait();
@@ -152,26 +153,24 @@ public class MainPageController  {
 
     public ObservableList<String> getTransactions() throws SQLException {
         ObservableList<String> transactionList = FXCollections.observableArrayList();
-        Transaction transaction = new Transaction();
-        ArrayList<String> list = transaction.getHistory(user);
-        transactionList.addAll(list);
+        UserTransactions userTransactions = new UserTransactions();
+        //ArrayList<String> list = userTransactions.getHistory(user);
+        //transactionList.addAll(list);
         return transactionList;
     }
 
+    @FXML
     public void transactionRefreshButtonPushed(ActionEvent event) throws SQLException {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         user = (User) stage.getUserData();
-        String transaction = "";
-        Scanner values = new Scanner(transaction);
-        // TODO fix this code so we can add the transaction history to the transaction history tableview
-        ObservableList<String> transactionList = getTransactions();
-        //toAccountID.setCellValueFactory(new PropertyValueFactory<>(""));
-        for (int index = 0; index < transactionList.size(); index++) {
-            transaction = transactionList.get(index);
-            fromAccountID.setText(values.next());
-            amount.setText(values.next()+" ADA");
-            toAccountID.setText(values.next());
-        }
+        TransactionDatabase database = new TransactionDatabase();
+        ObservableList<Transactions> list = database.history(user);
+
+        fromAccountID.setCellValueFactory(new PropertyValueFactory<>("fromAccountID"));
+        amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        toAccountID.setCellValueFactory(new PropertyValueFactory<>("toAccountID"));
+        transactionHistory.setItems(list);
+
     }
 }
