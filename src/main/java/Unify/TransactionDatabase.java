@@ -80,7 +80,7 @@ public class TransactionDatabase {
                 tempUser.getString(3), tempUser.getString(4), tempUser.getString(5), tempUser.getDouble(6));
 
         // creating a new prepared statement and query string and setting the variables
-        String getCrypto = "update Users set accountBalance= ? where accountID = ?";
+        String getCrypto = "update Users set accountBalance = ? where accountID = ?";
         prep2 = database.prepareStatement(getCrypto);
         newTotal = temporary.getAccountTotal() + amount;
         prep2.setString(1, String.valueOf((newTotal)));
