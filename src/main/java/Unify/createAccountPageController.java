@@ -42,13 +42,22 @@ public class createAccountPageController {
         confSpendPass = confirmSpendingPasswordField.getText();
         UserDatabase database = new UserDatabase();
 
-        if (database.usernameExists(username)) {
+        if (username.isEmpty() || password.isEmpty() || spendPass.isEmpty()) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setHeaderText("Incorrect Inputs");
+            error.setContentText("Username, Password and Spending Password cannot be left blank.\nPlease re-enter the information correctly.");
+            error.showAndWait();
+            passwordField.clear();
+            confirmPasswordField.clear();
+            spendingPasswordField.clear();
+            confirmSpendingPasswordField.clear();
+        } else if (database.usernameExists(username)) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Incorrect Username Input");
             error.setContentText("The Username entered already exists.\nPlease enter a different Username.");
             error.showAndWait();
             usernameField.clear();
-        } else if (!password.equals(confirmPass) && !spendPass.equals(confSpendPass)){
+        } else if (!password.equals(confirmPass) && !spendPass.equals(confSpendPass)) {
             Alert error = new Alert(Alert.AlertType.ERROR);
             error.setHeaderText("Incorrect Inputs");
             error.setContentText("Either the Password or Spending Password did not match the confirmation.\nPlease re-enter the information correctly.");
@@ -58,7 +67,6 @@ public class createAccountPageController {
             spendingPasswordField.clear();
             confirmSpendingPasswordField.clear();
         } else {
-
             User newUser = new User(database.nextAccountId(), username, password, spendPass, 0.00);
             database.updateUserDB(newUser);
 
