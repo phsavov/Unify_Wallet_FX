@@ -109,6 +109,14 @@ public class MainPageController  {
 
         user.setAddress();
 
+        try {
+            UserDatabase User = new UserDatabase();
+            User.updateAddress(user, user.getAddress());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         addressLabel.setText(user.getAddress());
     }
 
