@@ -37,9 +37,10 @@ public class UserDatabase {
         String userName = result.getString(2);
         String pass = result.getString(3);
         String spendPass = result.getString(4);
+        String phrase = result.getString(5);
         Double total = result.getDouble(6);
 
-        return new User(accountID, userName, pass, spendPass, total);
+        return new User(accountID, userName, pass, spendPass, phrase, total);
     }
 
 
@@ -149,6 +150,15 @@ public class UserDatabase {
         statement.setString(1, String.valueOf(0));
         statement.setString(2, String.valueOf(user.getAccountID()));
         statement.executeUpdate();
+    }
+
+    public void updatePhrase(User user) throws SQLException {
+        connection.createStatement();
+        String update = "update Users set mnemonicPhrase = ? where accountID = ?";
+        PreparedStatement prep = connection.prepareStatement(update);
+        prep.setString(1, user.getMnemonicPhrase());
+        prep.setString(2, String.valueOf(user.getAccountID()));
+        prep.executeUpdate();
     }
 
 

@@ -58,6 +58,15 @@ public class User {
         this.mnemonicPhrase = generateMnemonicPhrase();
     }
 
+    public User(int accountID, String username, String password, String spendingPassword, String mnemonicPhrase,double accountTotal){
+        this.accountID = accountID;
+        this.username = username;
+        this.password = password;
+        this.spendingPassword = spendingPassword;
+        this.mnemonicPhrase = mnemonicPhrase;
+        this.accountTotal = accountTotal;
+    }
+
     /**
      * this updates the account total by getting the current number from the database
      * and then running the set account total method so that it appears on screen

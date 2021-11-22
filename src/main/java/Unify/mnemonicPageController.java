@@ -40,6 +40,7 @@ public class mnemonicPageController {
             database.unBlock(user);
             database.resetLoginAttempts(user);
             user.setMnemonicPhrase();
+            database.updatePhrase(user);
             Alert newPhrase = new Alert(Alert.AlertType.CONFIRMATION);
             newPhrase.setHeaderText("Your Account Is Unlocked!");
             newPhrase.setContentText("Your account is now unlocked.\n" +
