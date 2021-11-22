@@ -34,11 +34,11 @@ public class MainPageController  {
     @FXML
     TableView<Transactions> transactionHistory;
     @FXML
-    TableColumn<String, String> toAccountID;
+    TableColumn<Transactions, String> toAccountID;
     @FXML
-    TableColumn<String, String> fromAccountID;
+    TableColumn<Transactions, String> fromAccountID;
     @FXML
-    TableColumn<String, String> amount;
+    TableColumn<Transactions, String> amount;
 
 
     protected User user;
