@@ -41,6 +41,13 @@ public class UserTransactions {
         return false;
     }
 
+    /**
+     *
+     * @param user
+     * @return ObservableList
+     * @throws SQLException
+     */
+
     public ObservableList<Transactions> getHistory(User user) throws SQLException {
         return transaction.history(user);
     }
