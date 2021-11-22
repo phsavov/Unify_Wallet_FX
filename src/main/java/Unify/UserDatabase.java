@@ -105,6 +105,12 @@ public class UserDatabase {
         update.executeUpdate();
     }
 
+    /**
+     *
+     * @param username
+     * @return boolean
+     * @throws SQLException
+     */
     public boolean toBeBlocked(String username) throws SQLException {
         connection.createStatement();
         String query = "select * from Users where username = ?";
@@ -127,6 +133,13 @@ public class UserDatabase {
         return false;
     }
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return boolean
+     * @throws SQLException
+     */
     public boolean isBlocked(String username, String password) throws SQLException {
         connection.createStatement();
         String query = "Select * from Users where username = ? and password = ?";
@@ -143,6 +156,11 @@ public class UserDatabase {
         return false;
     }
 
+    /**
+     *
+     * @param user
+     * @throws SQLException
+     */
     public void unBlock(User user) throws SQLException {
         connection.createStatement();
         String unlock = "update Users set accountLocked = ? where accountID = ?";
@@ -152,6 +170,11 @@ public class UserDatabase {
         statement.executeUpdate();
     }
 
+    /**
+     *
+     * @param user
+     * @throws SQLException
+     */
     public void updatePhrase(User user) throws SQLException {
         connection.createStatement();
         String update = "update Users set mnemonicPhrase = ? where accountID = ?";
@@ -183,6 +206,12 @@ public class UserDatabase {
         return newID; // returning the new account id
     }
 
+    /**
+     *
+     * @param username
+     * @return boolean
+     * @throws SQLException
+     */
     public boolean usernameExists(String username) throws SQLException {
         connection.createStatement();
         String query = "select * from Users where username = ?";

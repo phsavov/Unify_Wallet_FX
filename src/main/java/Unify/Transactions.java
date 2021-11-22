@@ -6,6 +6,12 @@ public class Transactions {
     private String amount;
     private String toAccountID;
 
+    /**
+     *
+     * @param fromAccountID
+     * @param amount
+     * @param toAccountID
+     */
     public Transactions(String fromAccountID, String amount, String toAccountID){
         this.fromAccountID = fromAccountID;
         this.amount = amount;

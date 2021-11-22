@@ -24,6 +24,11 @@ public class HomePageController {
     private Parent root;
     private Stage stage;
 
+    /**
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void logInButton(ActionEvent event) throws IOException {
 
@@ -34,6 +39,10 @@ public class HomePageController {
         stage.show();
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     */
     @FXML
     public void createAccountButton(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("createAccountPage.fxml"));
