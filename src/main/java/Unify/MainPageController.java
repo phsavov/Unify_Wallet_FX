@@ -27,6 +27,19 @@ The Send tab:
 -Has 4 fields for user input: an amount, a wallet address, their spending password, and an additional note
 -A send button that takes the above input and sends it to the designated wallet address
 -When sent, the controller will also confirm that the amount being sent is actually available in the users wallet
+
+The Receive tab:
+-This has a "Generate Address" button that will display a wallet address when pushed
+-The user will give someone this address, and that person will be able to send crypto using the generated address.
+
+The Add ADA Tab:
+-This has a field requiring an amount to be inputted, and an ADD button.
+-This allows a user to add ADA to their account by pushing the "ADD" button.
+
+The Ledger Tab:
+-Contains a table with three columns: From Account ID, Amount, and To Account ID
+-Refresh button that refreshes the ledger to display any new transactions
+-This serves as the transaction history between a user, displaying sent and received transactions from other users.
 */
 
 public class MainPageController  {
