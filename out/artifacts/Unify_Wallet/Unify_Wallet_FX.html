@@ -1,0 +1,43 @@
+<html><head>
+  <SCRIPT src="http://java.com/js/dtjava.js"></SCRIPT>
+<script>
+    function launchApplication(jnlpfile) {
+        dtjava.launch(            {
+                url : 'Unify_Wallet_FX.jnlp'
+            },
+            {
+                javafx : '8.0+'
+            },
+            {}
+        );
+        return false;
+    }
+</script>
+
+<script>
+    function javafxEmbedUnify_Wallet_FX_id() {
+        dtjava.embed(
+            {
+                id : 'Unify_Wallet_FX_id',
+                url : 'Unify_Wallet_FX.jnlp',
+                placeholder : 'javafx-app-placeholder',
+                width : '600',
+                height : '400'
+            },
+            {
+                javafx : '8.0+'
+            },
+            {}
+        );
+    }
+    <!-- Embed FX application into web page once page is loaded -->
+    dtjava.addOnloadCallback(javafxEmbedUnify_Wallet_FX_id);
+</script>
+
+</head><body>
+<h2>Test page for <b>Unify Wallet</b></h2>
+  <b>Webstart:</b> <a href='Unify_Wallet_FX.jnlp' onclick="return launchApplication('Unify_Wallet_FX.jnlp');">click to launch this app as webstart</a><br><hr><br>
+
+  <!-- Applet will be inserted here -->
+  <div id='javafx-app-placeholder'></div>
+</body></html>

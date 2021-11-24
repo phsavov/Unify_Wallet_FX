@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Unify_Wallet_FX.jnlp">
+  <information>
+    <title>Unify Wallet</title>
+    <vendor>Unknown</vendor>
+    <description>Unify Wallet</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Unify_Wallet_FX.jar" size="42766" download="eager" />
+    <jar href="commons-codec-1.11.jar" size="335042" download="eager" />
+    <jar href="commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="fluent-hc-4.5.13.jar" size="31547" download="eager" />
+    <jar href="httpclient-4.5.13.jar" size="780321" download="eager" />
+    <jar href="httpclient-cache-4.5.13.jar" size="164090" download="eager" />
+    <jar href="httpclient-osgi-4.5.13.jar" size="1370788" download="eager" />
+    <jar href="httpclient-win-4.5.13.jar" size="17850" download="eager" />
+    <jar href="httpcore-4.4.13.jar" size="328593" download="eager" />
+    <jar href="httpmime-4.5.13.jar" size="41790" download="eager" />
+    <jar href="jna-4.5.2.jar" size="1484022" download="eager" />
+    <jar href="jna-platform-4.5.2.jar" size="2327597" download="eager" />
+    <jar href="json-20210307.jar" size="69710" download="eager" />
+    <jar href="mssql-jdbc-9.4.0.jre8.jar" size="1334601" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="Unify.WalletApplication"  name="Unify Wallet" />
+  <update check="background"/>
+</jnlp>
