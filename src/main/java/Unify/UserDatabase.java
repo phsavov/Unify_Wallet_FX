@@ -1,6 +1,14 @@
 package Unify;
 import java.sql.*;
 
+/*
+The UserDatabase class is in charge of the backend part of users.
+This deals with incorrect passwords, locked accounts, general user info, and general account information.
+This has several classes that deal with the credentials, such as checking them, blocking users giving the wrong credentials, unblocking them, etc.
+Users that input the incorrect passwords, but give the right username will lock the account, preventing access to malicious hackers.
+This also updates the sending address for users, gets the total amount for an account, and updating the User Database.
+*/
+
 public class UserDatabase {
 
     public Connection connection;
