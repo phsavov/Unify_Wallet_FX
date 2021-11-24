@@ -3,7 +3,7 @@ package Unify;
 /* Apache HTTPComponents ver 4.5.13 */
 /**
  * these imports are from https://mvnrepository.com/artifact/org.json/json/20210307
- * this is so that we can get the current ADA price in our desktop application application
+ * this is so that we can get the current ADA price in our desktop application
  */
 
 import org.apache.http.HttpEntity;
@@ -121,7 +121,7 @@ public class User {
         }
         Random random = new Random();
         for (int i = 0; i < 5; i++){
-            phrase = phrase + alphabet[random.nextInt(0,26)];
+            phrase = phrase + alphabet[random.nextInt(26)];
         }
         return phrase;
     }
@@ -134,8 +134,8 @@ public class User {
      */
     private String generateAddress(){
         Random random = new Random();
-        int random1 = random.nextInt(1000, 5001);
-        int random2 = random.nextInt(1000, 5001);
+        int random1 = random.nextInt(5001);
+        int random2 = random.nextInt(5001);
         String address = String.valueOf(accountID) + '.' + String.valueOf(random1) + '.' + String.valueOf(random2);
         return address;
     }

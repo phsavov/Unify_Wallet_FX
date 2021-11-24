@@ -86,10 +86,9 @@ public class MainPageController  {
             } else {
                 Alert notProcessed = new Alert(Alert.AlertType.ERROR);
                 notProcessed.setHeaderText("UserTransactions Not Able to Process");
-                notProcessed.setContentText("""
-                        The UserTransactions has not been able to be processed.
-                        There is a Database Connection issue. Please check your internet connection.
-                        If not the case, please email philip.savov@utdallas.edu""");
+                notProcessed.setContentText(" The UserTransactions has not been able to be processed.\n" +
+                                "There is a Database Connection issue. Please check your internet connection.\n" +
+                        "If not the case, please email philip.savov@utdallas.edu");
                 notProcessed.showAndWait();
             }
 
@@ -133,40 +132,26 @@ public class MainPageController  {
         if (amount <= 0){
             Alert toLow = new Alert(Alert.AlertType.ERROR);
             toLow.setHeaderText("Incorrect Input");
-            toLow.setHeaderText("""
-                    The amount entered was negative or 0.
-                    Please enter a number that is greater than 0.
-                    """);
+            toLow.setHeaderText("The amount entered was negative or 0.\n Please enter a number that is greater than 0.");
             toLow.showAndWait();
         } else {
             if (database.addFunds(user, amount)){
                 displayTotal.setText(String.valueOf(user.getAccountTotal()));
                 Alert worked = new Alert(Alert.AlertType.CONFIRMATION);
                 worked.setHeaderText("Success!!!");
-                worked.setContentText("""
-                        The Funds have been successfully added to your account.
-                        To see just click on the 'Home' Tab.
-                        """);
+                worked.setContentText("The Funds have been successfully added to your account.\n" +
+                        "To see just click on the 'Home' Tab.");
             } else {
                 Alert notProcessed = new Alert(Alert.AlertType.ERROR);
                 notProcessed.setHeaderText("The funds were not able to be processed");
-                notProcessed.setContentText("""
-                        The add funds has not been able to be processed.
-                        There is a Database Connection issue. Please check your internet connection.
-                        If not the case, please email philip.savov@utdallas.edu
-                        """);
+                notProcessed.setContentText("The add funds has not been able to be processed.\n" +
+                        "There is a Database Connection issue. Please check your internet connection.\n" +
+                        "If not the case, please email philip.savov@utdallas.edu");
                 notProcessed.showAndWait();
             }
         }
     }
 
-    public ObservableList<String> getTransactions() throws SQLException {
-        ObservableList<String> transactionList = FXCollections.observableArrayList();
-        UserTransactions userTransactions = new UserTransactions();
-        //ArrayList<String> list = userTransactions.getHistory(user);
-        //transactionList.addAll(list);
-        return transactionList;
-    }
 
     @FXML
     public void transactionRefreshButtonPushed(ActionEvent event) throws SQLException {

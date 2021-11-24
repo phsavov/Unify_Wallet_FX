@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlserver://unify-db.database.windows.net:1433;database=Unify_Wallet;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="Azure SQL Database - Unify_Wallet@unify-db.database.windows.net" uuid="19875729-de80-48c9-a99d-8808598ace9f">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://unify-db.database.windows.net:1433;database=Unify_Wallet;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

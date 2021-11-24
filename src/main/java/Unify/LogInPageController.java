@@ -30,17 +30,12 @@ public class LogInPageController {
 
     @FXML
     public void LogIn(ActionEvent event) throws IOException, SQLException {
-        int loginAttempt = 3;
+        int loginAttempt;
         boolean loginSuccessful = false;
 
         String username = usernameField.getText();
         String password = passwordField.getText();
-        UserDatabase db = null;
-        try {
-            db = new UserDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        UserDatabase db = new UserDatabase();
 
         loginAttempt = db.checkCredentials(username, password);
         if(loginAttempt == 2){

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Unify_Wallet_FX" target="17" />
+      <module name="Unify_Wallet_FX" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
