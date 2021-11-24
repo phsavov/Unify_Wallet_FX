@@ -14,6 +14,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/*
+This class is a controller in charge of the create account button.
+A user will enter their desired username, password, and spending password.
+This will check if the username is available, that the password matches the confirmed password, and that the spending password matches the confirm spending password.
+If all credentials all valid, a new User will be created and subsequently added to the database.
+*/
+
 public class createAccountPageController {
 
     @FXML
