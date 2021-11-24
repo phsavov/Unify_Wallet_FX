@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/*
+This class defines the variables and methods of a user object. It handles getting and setting all of the variables including the account id, the username, the password, spending password, the mnemonic phrase, account total, and the address.
+It also creates an api key and gets the current ADA price.
+*/
+
 public class User {
 
 
@@ -76,32 +81,43 @@ public class User {
         UserDatabase database = new UserDatabase();
         setAccountTotal(database.getTotal(getAccountID()));
     }
-
+    
+    // gets the username
     public String getUsername() { return username; }
 
+    //gets Account Total
     public double getAccountTotal() {return accountTotal; }
 
+    //sets Account total
     public void setAccountTotal(double accountTotal) { this.accountTotal = accountTotal; }
 
+    //gets account id
     public int getAccountID() { return accountID; }
 
+    //sets address
     public void setAddress() { address = generateAddress(); }
 
+    //gets mnemonic phrase
     public String getMnemonicPhrase(){ return mnemonicPhrase; }
 
+    //gets address
     public String getAddress(){
         return address;
     }
 
+    //sets mnemonic phrase
     public void setMnemonicPhrase() { mnemonicPhrase = generateMnemonicPhrase(); }
 
+    //gets password
     public String getPassword() { return password; }
 
+    //changes password
     public boolean changePassword(String password){
         this.password = password;
         return true;
     }
 
+    //gets spending password
     public String getSpendingPassword() { return spendingPassword; }
 
     /**
