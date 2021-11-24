@@ -7,6 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+* This is the Transaction database class. The main purpose if this class is to compute transactions between two different users. 
+* The method sending crypto gets the user sending the crypto, the ammount being sent, and the receiving address. The method then takes the 
+* information and querys through the databse and completes the tranasaction if the recieving address was correct. 
+* Then at the end of that method it calls another method that udates the ledger database by putting this transaction that had just taken place in the history.
+*/
+
 public class TransactionDatabase {
     /**
      * these are the current connection strings to our azure sql database, which will change because we will merge the table from one database to the other
@@ -116,7 +123,10 @@ public class TransactionDatabase {
         statement.executeUpdate();
 
     }
-
+    
+    // this method returs an observable list of all the transaction for this specific user
+    // the sql statement will find all trnasactions with the users account id and will then 
+    // store the information into a object called transactions that then gets stored into the list that gets returned.
     public ObservableList<Transactions> history(User user) throws SQLException {
         ObservableList<Transactions> transactionHistory = FXCollections.observableArrayList();
         database.createStatement();
