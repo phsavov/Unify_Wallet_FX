@@ -18,7 +18,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-/*HEI*/
+/*
+The HomePageController
+This manages the Home Page of our GUI
+LogInButton:
+-The LogInButton manages the Log In button, users will enter their username and password, then click the login button.
+-This will then get the information entered and check the database to give access to the desired account
+createAccountButton
+-This function will take the credentials entered by the user, double check that they are not alredy in use, then create a new account with those credentials.
+*/
 
 public class HomePageController {
 
