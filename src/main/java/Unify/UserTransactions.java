@@ -5,6 +5,13 @@ import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
+/**
+* The User transaction class was made to be a bridge between the transaction database and the rest of the code calling it.
+* The class has tow main methods that get allot of use which is to process a transaction and then to get the transaction
+* history of a specific user.
+*/
+
 public class UserTransactions {
 
 
