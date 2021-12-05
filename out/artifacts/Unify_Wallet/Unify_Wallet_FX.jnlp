@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Unify_Wallet_FX.jar" size="42766" download="eager" />
+    <jar href="Unify_Wallet_FX.jar" size="42763" download="eager" />
     <jar href="commons-codec-1.11.jar" size="335042" download="eager" />
     <jar href="commons-logging-1.2.jar" size="61829" download="eager" />
     <jar href="fluent-hc-4.5.13.jar" size="31547" download="eager" />
